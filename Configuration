@@ -1,0 +1,43 @@
+1. If jvm does not have the certificate installed of the server on which secured service is installed, then  we get following error :
+
+
+
+com.sun.jersey.api.client.ClientHandlerException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested targetD.
+
+
+
+2. Use portecle-1.11 software to install the certificate in the cacerts of the JVM or we can use java keytool as well.
+
+
+
+
+
+Copy the "cacerts" keystore file from the jre inside jdk from : C:\Program Files\Java\jdk1.8.0_181\jre\lib\security to some other location (ie. desktop) so that you can install the server certificate in this cacerts file first and then replace the original "cacerts" keystore to the new "cacerts".
+For above thing go to portcle and first open the "cacerts" copied on desktop, by clicking the open keystore file in portcle. Then from import trusted certificate tool option in portcle, import the certificate of the server. Then save this complete "cacerts" to some other location. Now copy this "cacerts" to C:\Program Files\Java\jdk1.8.0_181\jre\lib\security  (While importing the server certificate, check for the DNS name in the certificate as well, you need to map it with the ip-address in following steps. )
+
+
+
+
+3. Check the DNS name in the certificate to be installed.
+
+
+
+4. Once certificate is installed in the keystore ( cacerts ) of jvm, then we must need to map certificate's DNS with the IP address of the service in the HOST file, otherwise we will get following error ( SSLHandshakeException ) :
+
+
+
+   No subject alternative names matching IP address <ip-address> found.
+
+
+
+5. Once entry done for the ip address to the DNS in the host file then we must need to use host name (DNS) while calling service.
+
+
+
+   eg. https://sanjay.company.com:8443/service/resource.
+
+
+
+
+
+***************************** HAPPY CODING **********************************
